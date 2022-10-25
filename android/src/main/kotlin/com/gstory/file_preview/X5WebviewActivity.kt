@@ -1,8 +1,13 @@
 package com.gstory.file_preview
 
 import android.app.Activity
+import android.opengl.ETC1.getWidth
 import android.os.Build
 import android.os.Bundle
+import android.os.SystemClock
+import android.util.Log
+import android.view.MotionEvent
+import android.view.View
 import com.tencent.smtt.sdk.*
 
 
@@ -47,9 +52,15 @@ class X5WebviewActivity : Activity() {
     }
 
     //进度显示
-    private class MyChromeClient : WebChromeClient() {
+    private inner class MyChromeClient : WebChromeClient() {
         override fun onProgressChanged(p0: WebView?, p1: Int) {
+            Log.d("安卓进度",p1.toString());
             super.onProgressChanged(p0, p1)
+            if(p1>=100){
+                val x = webX5.width * 2.5f / 3
+                val y = 100f
+                simulateTouchEvent(webX5, x, y)
+            }
         }
     }
 
@@ -57,7 +68,21 @@ class X5WebviewActivity : Activity() {
 
     }
 
-
+    private fun simulateTouchEvent(view: View, x: Float, y: Float) {
+        val downTime = SystemClock.currentThreadTimeMillis()
+        val eventTime = downTime + 50
+        val metaState = 0
+        val motionEvent = MotionEvent.obtain(
+            downTime, eventTime,
+            MotionEvent.ACTION_DOWN, x, y, metaState
+        )
+        view.dispatchTouchEvent(motionEvent)
+        val upEvent = MotionEvent.obtain(
+            downTime + 100, eventTime + 100,
+            MotionEvent.ACTION_UP, x, y, metaState
+        )
+        view.dispatchTouchEvent(upEvent)
+    }
     override fun onDestroy() {
         super.onDestroy()
         //清除cookie
