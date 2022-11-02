@@ -31,9 +31,9 @@ class _FilePreviewPageState extends State<FilePreviewPage> {
           Container(
             alignment: Alignment.topLeft,
             child: FilePreviewWidget(
-             controller: controller,
+              controller: controller,
               width: 400,
-              height: 600,
+              height: 400,
               path: widget.path,
               callBack: FilePreviewCallBack(onShow: () {
                 print("文件打开成功");
@@ -48,31 +48,36 @@ class _FilePreviewPageState extends State<FilePreviewPage> {
             children: [
               TextButton(
                 onPressed: () {
-                  controller.showFile("https://gstory.vercel.app/ceshi/ceshi.docx");
+                  controller
+                      .showFile("https://gstory.vercel.app/ceshi/ceshi.docx");
                 },
                 child: Text("docx"),
               ),
               TextButton(
                 onPressed: () {
-                  controller.showFile("https://gstory.vercel.app/ceshi/ceshi.pdf");
+                  controller
+                      .showFile("https://gstory.vercel.app/ceshi/ceshi.pdf");
                 },
                 child: Text("pdf"),
               ),
               TextButton(
                 onPressed: () {
-                  controller.showFile("https://gstory.vercel.app/ceshi/ceshi.xisx");
+                  controller
+                      .showFile("https://gstory.vercel.app/ceshi/ceshi.xisx");
                 },
                 child: Text("xisx"),
               ),
               TextButton(
                 onPressed: () {
-                  controller.showFile("https://gstory.vercel.app/ceshi/ceshi.txt");
+                  controller
+                      .showFile("https://gstory.vercel.app/ceshi/ceshi.txt");
                 },
                 child: Text("txt"),
               ),
               TextButton(
                 onPressed: () {
-                  controller.showFile("https://gstory.vercel.app/ceshi/ceshi.pptx");
+                  controller
+                      .showFile("https://gstory.vercel.app/ceshi/ceshi.pptx");
                 },
                 child: Text("ppt"),
               ),

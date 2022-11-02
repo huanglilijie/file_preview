@@ -67,21 +67,26 @@ class TbsManager private constructor() {
             override fun onDownloadFinish(i: Int) {
                 //tbs内核下载完成回调
                 Log.e("TBS内核", "下载完成$i")
+                callBack?.initLoadProcess(i)
             }
 
             override fun onInstallFinish(i: Int) {
                 //内核安装完成回调，
                 Log.e("TBS内核", "安装完成")
+                callBack?.initLoadProcess(i)
             }
 
             override fun onDownloadProgress(i: Int) {
                 //下载进度监听
                 Log.e("TBS内核", "下载进度 $i")
+                callBack?.initLoadProcess(i)
             }
         })
     }
+
 }
 
 interface InitCallBack {
     fun initFinish(b: Boolean)
+    fun initLoadProcess(i: Int)
 }

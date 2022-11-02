@@ -71,9 +71,16 @@ class FilePreviewPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
                             result.success(b)
                         }
                     }
+                    override fun initLoadProcess(i: Int) {
+                        mActivity?.runOnUiThread {
+                            channel.invokeMethod("test", "{\"arg1\":\"$i\"}")
+                        }
+
+                    }
                 })
             }
         } else if (call.method == "tbsHasInit") {
+
             result.success(TbsManager.instance.isInit)
         } else if (call.method == "deleteCache") {
             FileUtils.deleteCache(mActivity!!,FileUtils.getDir(mActivity!!))

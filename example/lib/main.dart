@@ -38,8 +38,22 @@ class _HomePageState extends State<HomePage> {
   }
 
   void _initTBS() async {
+    FilePreview.nativeMessageListener((res) async {
+      var process = double.parse(res);
+      print('res=>>>>>$process');
+      if (process > 0 && process < 100) {
+        // 下载内核中
+
+      } else if (process == 200) {
+        // 下载完成
+      } else {
+        print('下载失败，请手动下载');
+        await FilePreview.tbsDebug();
+      }
+    });
     isInit = await FilePreview.initTBS();
     if (mounted) {
+      print('isInit:$isInit');
       setState(() {});
     }
   }
@@ -85,7 +99,8 @@ class _HomePageState extends State<HomePage> {
               textColor: Colors.white,
               child: const Text('检测TBS是否初始化成功'),
               onPressed: () async {
-                isInit = await FilePreview.tbsHasInit();
+                var hasInit = await FilePreview.tbsHasInit();
+                print('hasInit:$hasInit');
                 setState(() {});
               },
             ),
@@ -100,25 +115,31 @@ class _HomePageState extends State<HomePage> {
                   }
                 }),
             MaterialButton(
-                color: Colors.blue,
-                textColor: Colors.white,
-                child: const Text('在线视频(仅支持ios)'),
-                onPressed: () async {
-                  if (Platform.isIOS) {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) {
-                          return const FilePreviewPage(
-                            title: "在线视频(仅支持ios)",
-                            path:
-                                "https://v.gsuus.com/play/xbo8Dkdg/index.m3u8",
-                          );
-                        },
-                      ),
-                    );
-                  }
-                }),
+              color: Colors.blue,
+              textColor: Colors.white,
+              child: const Text('在线docx预览'),
+              onPressed: () async {
+                isInit = await FilePreview.tbsHasInit();
+                setState(() {});
+                if (!isInit) {
+                  _initTBS();
+                  return;
+                }
+
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) {
+                      return const FilePreviewPage(
+                        title: "docx预览",
+                        path:
+                            "http://116.62.204.86:7610/Resource/UploadFile/Upload/2022/8/26/APP-新加详情页KQ202200805-001_399227410968.docx",
+                      );
+                    },
+                  ),
+                );
+              },
+            ),
           ],
         ),
       ),
