@@ -59,7 +59,7 @@ class X5WebviewActivity : Activity() {
             if(p1>=100){
                 val x = webX5.width * 2.5f / 3
                 val y = 100f
-//                simulateTouchEvent(webX5, x, y)
+                simulateTouchEvent(webX5, x, y)
             }
         }
     }
